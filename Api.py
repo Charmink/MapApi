@@ -80,6 +80,7 @@ class MyWidget(QMainWindow):
             json_response = response.json()
             toponym = json_response["response"]["GeoObjectCollection"][
                 "featureMember"][0]["GeoObject"]
+            address = toponym['metaDataProperty']['GeocoderMetaData']['Address']['formatted']
             toponym_coodrinates = toponym["Point"]["pos"]
             toponym_longitude, toponym_lattitude = toponym_coodrinates.split(" ")
         except Exception:
@@ -87,12 +88,14 @@ class MyWidget(QMainWindow):
         map_params['ll'] = ','.join([toponym_longitude, toponym_lattitude])
         map_params['pt'] = f"{','.join([toponym_longitude, toponym_lattitude])}" \
                            f",flag"
+        self.textBrowser.setPlainText('\n'.join(address.split(', ')))
         request()
 
     def vipe(self):
         global map_params
         map_params.pop('pt', None)
         self.lineEdit.setText('')
+        self.textBrowser.setPlainText('')
         request()
 
     def load_image(self, image):
