@@ -35,7 +35,6 @@ class MyWidget(QMainWindow):
             map_params['ll'] = ','.join([str(float(map_params['ll'].split(',')[0])),
                                          str(float(map_params['ll'].split(',')[1]) +
                                              float(map_params['spn'].split(',')[0]))])
-            print(1)
         elif event.key() == Qt.Key_Down:
             map_params['ll'] = ','.join(
                 [str(float(map_params['ll'].split(',')[0])),
@@ -85,7 +84,8 @@ class MyWidget(QMainWindow):
         except Exception:
             return
         map_params['ll'] = ','.join([toponym_longitude, toponym_lattitude])
-        map_params['pt'] = f"{','.join([toponym_longitude, toponym_lattitude])},flag"
+        map_params['pt'] = f"{','.join([toponym_longitude, toponym_lattitude])}" \
+                           f",flag"
         request()
 
     def load_image(self, image):
